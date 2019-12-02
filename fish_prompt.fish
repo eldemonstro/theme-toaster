@@ -19,7 +19,7 @@ function __toaster_current_folder
   if test $PWD = '/'
     echo -n '/'
   else
-    echo -n $PWD | grep -o -E '[^\/]+$'
+    echo (prompt_pwd)
   end
 end
 
@@ -67,9 +67,15 @@ function __toaster_git_status
 end
 
 function fish_prompt
+  __toaster_color_echo $__toaster_color_pink "╭<"
   __toaster_color_echo $__toaster_color_blue "# "
   __toaster_color_echo $__toaster_color_purple (__toaster_current_folder)
   __toaster_git_status
   echo
+  __toaster_color_echo $__toaster_color_pink "╰>"
   __toaster_color_echo $__toaster_color_pink "\$ "
+end
+
+function fish_right_prompt --description 'Write out the right prompt'
+	__toaster_color_echo $__toaster_color_white (date '+%T')
 end
