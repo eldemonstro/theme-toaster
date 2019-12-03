@@ -80,6 +80,3 @@ function fish_right_prompt --description 'Write out the right prompt'
 	__toaster_color_echo $__toaster_color_white (date '+%T')
 end
 
-function fish_greeting
-	fortune
-end
