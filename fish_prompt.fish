@@ -66,6 +66,20 @@ function __toaster_git_status
   end
 end
 
+function __toaster_git_repo_path
+  echo git rev-parse --git-dir 2>/dev/null
+end
+
+function __toaster_git_mode
+  if test -e (__toaster_git_repo_path)"/BISECT_LOG"
+    echo ("+bisect")
+  else if test -e (__toaster_git_repo_path)"/MERGE_HEAD"
+    echo ("+merge")
+  else if test -e (__toaster_git_repo_path)"/rebase" || test -e (__toaster_git_repo_path)"/rebase-apply" || test -e (__toaster_git_repo_path)"/rebase-merge" || test -e (__toaster_git_repo_path)"/../.dotest"
+    echo ("+rebase")
+  end
+end
+
 function fish_prompt
   __toaster_color_echo $__toaster_color_pink "╭<"
   __toaster_color_echo $__toaster_color_blue "# "
@@ -77,6 +91,10 @@ function fish_prompt
 end
 
 function fish_right_prompt --description 'Write out the right prompt'
-	__toaster_color_echo $__toaster_color_white (date '+%T')
+  __toaster_color_echo $__toaster_color_white (date '+%T')
+  if test -n (__toaster_git_branch_name)
+    __toaster_color_echo $__toaster_color_white ":"
+    __toaster_color_echo $__toaster_color_blue (git rev-parse --short HEAD 2>/dev/null)
+    __toaster_color_echo $__toaster_color_white (__toaster_git_mode)
+  end
 end
-
