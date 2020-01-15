@@ -67,16 +67,16 @@ function __toaster_git_status
 end
 
 function __toaster_git_repo_path
-  echo git rev-parse --git-dir 2>/dev/null
+  echo (git rev-parse --git-dir 2>/dev/null)
 end
 
 function __toaster_git_mode
   if test -e (__toaster_git_repo_path)"/BISECT_LOG"
-    echo ("+bisect")
+    echo "+bisect"
   else if test -e (__toaster_git_repo_path)"/MERGE_HEAD"
-    echo ("+merge")
+    echo "+merge"
   else if test -e (__toaster_git_repo_path)"/rebase" || test -e (__toaster_git_repo_path)"/rebase-apply" || test -e (__toaster_git_repo_path)"/rebase-merge" || test -e (__toaster_git_repo_path)"/../.dotest"
-    echo ("+rebase")
+    echo "+rebase"
   end
 end
 
